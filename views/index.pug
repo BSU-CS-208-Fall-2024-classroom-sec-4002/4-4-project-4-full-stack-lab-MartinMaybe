@@ -6,12 +6,18 @@ head
 body
     h1 Simple TODO App
     p Add yoour TODO items here
-        form#todoForm
+        form#todoForm(action='/', method='post')
         label(for='todoInput') TODO: 
         input#todoInput(type='text' name='todo' placeholder='Add to your list..')
         button#addTaskButton(type='submit') Add
     h2 My TODO List
     ul#todoList
+        - for (let i = 0; i < tasks.length; i++)
+            li
+                | #{tasks[i].id} #{tasks[i].task}
+                form(action='/delete', method='post')
+                    input(type='hidden', name='id', value=tasks[i].id)
+                    input(type='submit', value='Delete')
     script. 
         const addTaskButton = document.getElementById('addTaskButton');
         const taskInput = document.getElementById('todoInput');
